@@ -56,7 +56,7 @@ def get_frequency_dict(sequence):
 #
 # Problem #1: Scoring a word
 #
-def get_word_score(word, n):
+def get_word_score(word: str, n: int) -> int:
     """
     Returns the score for a word. Assumes the word is a valid word.
 
@@ -72,7 +72,57 @@ def get_word_score(word, n):
     returns: int >= 0
     """
     # TO DO ... <-- Remove this comment when you code this function
+    assert isinstance(word,str), "word must be a string"
+    word = word.lower()
+    assert word.islower(), "lower() conversion failed"
+    assert len(word) > 0, "word must not be empty"
+    assert isinstance(n, int), "n must be an int"
+    assert n > 0, "hand length n must not be 0"
 
+    # magic coding
+    word_score = 1
+
+    # Pseudocode
+    """
+    for each letter in word
+        get letter score from dict SCRABBLE_LETTER_VALUES
+        add up all the letter scores
+    
+    multiply by length of word
+    followed by bonus calculation
+    example if n=7 and you make the word "waybill" on the first try.
+    it would be worth 155 points (the base score for "waybill" is (4++))
+    """
+    total_letter_score = 0
+
+    for letter in word:
+        letter_score = SCRABBLE_LETTER_VALUES[letter]
+        total_letter_score += letter_score
+    
+    total_letter_score *= n
+
+    if len(word) == n:
+        total_letter_score += 50
+
+    print(total_letter_score)
+
+
+    # checking post-conditions
+    assert word_score > 0, "score calculation failed"
+    assert isinstance(word_score, int), "score must be int"
+
+    return word_score
+
+#testcases for logic
+get_word_score("waybill", 7) #155
+
+#testcases for assertion
+#Legal
+# get_word_score("haPPy", 7)
+# #Illegal
+# get_word_score(1000, 7)
+# get_word_score("", 7)
+# get_word_score("blabla", 0)
 
 #
 # Problem #2: Make sure you understand how this function works and what it does!
@@ -90,10 +140,10 @@ def display_hand(hand):
     hand: dictionary (string -> int)
     """
     for letter in hand.keys():
-        for j in range(hand[letter]):
+        for _ in range(hand[letter]):
             print(letter, end=" ")       # print all on the same line
     print()                             # print an empty line
-
+display_hand({'a':1, 'x':2, 'l':3, 'e':1})
 #
 # Problem #2: Make sure you understand how this function works and what it does!
 #
@@ -124,12 +174,14 @@ def deal_hand(n):
 
     return hand
 
+print(deal_hand(HAND_SIZE))
+
 #
 # Problem #2: Update a hand by removing letters
 #
 
 
-def update_hand(hand, word):
+def update_hand(hand: dict, word: str) -> dict:
     """
     Assumes that 'hand' has all the letters in word.
     In other words, this assumes that however many times
@@ -146,12 +198,22 @@ def update_hand(hand, word):
     returns: dictionary (string -> int)
     """
     # TO DO ... <-- Remove this comment when you code this function
-
-
+    """
+    make a hand.copy()
+    for every letter in word
+        use the letter has a key to look up in the hand dict
+        and subtract one from the dict values letter counts
+    
+    return handcoppy
+    """
+hand = {'a':1, 'q':1, 'l':2, 'm':1, 'u':1, 'i':1}
+display_hand(hand)
+new_hand = update_hand
+print
 #
 # Problem #3: Test word validity
 #
-def is_valid_word(word, hand, word_list):
+def is_valid_word(word: str, hand: dict, word_list: list) -> bool:
     """
     Returns True if word is in the word_list and is entirely
     composed of letters in the hand. Otherwise, returns False.

@@ -1,0 +1,18 @@
+def greeting(name: str) -> str:
+    a: int
+    child: bool
+
+    age = 17.5
+
+    if age < 18:
+        child = True
+    else:
+        child = False
+
+    return "Hello " + name
+
+# greeting(3)
+# greeting(b'Alice')
+# greeting("World!")
+# print(greeting("KMIDS"))
+# print(greeting(3.1415))
